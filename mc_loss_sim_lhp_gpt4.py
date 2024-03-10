@@ -60,12 +60,12 @@ def simulate_default_times(n_loans, annual_pd, default_corr, n_periods, n_scenar
     # Generate common and idiosyncratic factors based on the specified distribution.
     print("Creating common and idiosyncratic factors...")
     tick = time.time()
+    idiosyncratic_factor = np.random.normal(0, 1, (n_loans, n_scenarios)) if dist_type == 'normal' else t.rvs(df, size=(n_loans, n_scenarios))
     if default_corr > toll_zero_corr:
         common_factor = np.random.normal(0, 1, (1, n_scenarios)) if dist_type == 'normal' else t.rvs(df, size=(1, n_scenarios))
-        idiosyncratic_factor = np.random.normal(0, 1, (n_loans, n_scenarios)) if dist_type == 'normal' else t.rvs(df, size=(n_loans, n_scenarios))
         z = np.sqrt(default_corr) * common_factor + np.sqrt(1 - default_corr) * idiosyncratic_factor
     else:
-        z = np.random.normal(0, 1, (n_loans, n_scenarios)) if dist_type == 'normal' else t.rvs(df, size=(n_loans, n_scenarios))
+        z = idiosyncratic_factor
     tock = time.time()
     print(f"Time taken: {tock - tick:.2f} seconds")
     
