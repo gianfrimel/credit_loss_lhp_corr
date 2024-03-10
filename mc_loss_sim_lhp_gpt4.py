@@ -1,3 +1,9 @@
+"""
+Program to simulate the total losses of a loan portfolio using a Monte Carlo simulation.
+There is the assumption of a large homogeneous porfolio.  
+Default correlation is assumed to be constant and modelled with a common factor.
+"""
+
 import numpy as np
 import random
 import os
