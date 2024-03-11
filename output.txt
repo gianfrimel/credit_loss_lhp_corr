@@ -3,7 +3,7 @@ Number of Loans: 10,000
 Annual PD: 0.60%
 Default Correlation: 5.00%
 Number of Periods: 60
-Number of Scenarios: 10,000
+Number of Scenarios: 15,000
 LGD: 47.00%
 Initial Balance per Loan: 10,000.00
 Total Initial Portfolio Balance: 100,000,000.00
@@ -12,16 +12,16 @@ Distribution Type: Normal
 Running simulation...
 
 Creating common and idiosyncratic factors...
-Time taken: 3.85 seconds
+Time taken: 3.76 seconds
 Determining default times...
-Time taken: 2.12 seconds
+Time taken: 1.99 seconds
 Calculating losses...
-Time taken: 1.32 seconds
+Time taken: 1.77 seconds
 Simulation complete.
-Total Time: 7.52 seconds
+Total Time: 7.81 seconds
 
 Loss Results:
-Mean: 0.716%
-99.000% Quantile: 2.100%
-99.900% Quantile: 3.020%
-99.990% Quantile: 4.038%
+Mean: 0.713%
+99.000% Quantile: 2.065%
+99.900% Quantile: 2.981%
+99.990% Quantile: 4.052%

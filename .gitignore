@@ -1,2 +1,4 @@
-distrib_cum_loss_end.png
+
+*.png
 output.txt
+*.png
