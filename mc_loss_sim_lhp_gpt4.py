@@ -90,9 +90,6 @@ def calculate_losses(default_times, lgd, initial_balance, payment, n_periods, n_
     - n_periods: Number of periods.
     - n_loans: Number of loans.
     """
-    # Calculate outstanding balance at each period.
-    outstanding_balances = initial_balance - np.arange(n_periods) * payment
-    
     # Calculate losses
     print("Calculating losses...")
     
