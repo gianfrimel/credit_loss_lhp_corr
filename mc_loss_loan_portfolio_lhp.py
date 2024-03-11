@@ -12,7 +12,6 @@ from scipy.stats import norm, t
 import time
 import seaborn as sns
 import matplotlib.pyplot as plt
-import tqdm
 
 toll_zero_corr = 1e-6
 
@@ -28,7 +27,6 @@ class Logger(object):
 
     def flush(self): # this flush method is needed for python 3 compatibility.
         # this handles the flush command by doing nothing.
-        # you might want to specify some extra behavior here.
         pass
 
 def set_seed(seed):
@@ -59,23 +57,23 @@ def simulate_default_times(n_loans, annual_pd, default_corr, n_periods, n_scenar
     
     # Generate common and idiosyncratic factors based on the specified distribution.
     print("Creating common and idiosyncratic factors...")
-    tick = time.time()
+    tic = time.time()
     idiosyncratic_factor = np.random.normal(0, 1, (n_loans, n_scenarios)) if dist_type == 'normal' else t.rvs(df, size=(n_loans, n_scenarios))
     if default_corr > toll_zero_corr:
         common_factor = np.random.normal(0, 1, (1, n_scenarios)) if dist_type == 'normal' else t.rvs(df, size=(1, n_scenarios))
         z = np.sqrt(default_corr) * common_factor + np.sqrt(1 - default_corr) * idiosyncratic_factor
     else:
         z = idiosyncratic_factor
-    tock = time.time()
-    print(f"Time taken: {tock - tick:.2f} seconds")
+    toc = time.time()
+    print(f"Time taken: {toc - tic:.2f} seconds")
     
     # Determine default times by comparing generated factors with PD thresholds.
     print("Determining default times...")
     thresholds = norm.ppf(cumulative_pd) if dist_type == 'normal' else t.ppf(cumulative_pd, df)
     default_times = np.searchsorted(thresholds, z, side='right')
     default_times[default_times >= n_periods] = n_periods  # Adjust for non-defaulting loans.
-    tock2 = time.time()
-    print(f"Time taken: {tock2 - tock:.2f} seconds")
+    toc2 = time.time()
+    print(f"Time taken: {toc2 - toc:.2f} seconds")
     return default_times
 
 def calculate_losses(default_times, lgd, initial_balance, payment, n_periods, n_loans):
@@ -94,12 +92,12 @@ def calculate_losses(default_times, lgd, initial_balance, payment, n_periods, n_
     print("Calculating losses...")
     
     # Using numpy broadcasting to avoid loops.
-    tick = time.time()
+    tic = time.time()
     losses = np.where(default_times < n_periods, initial_balance - default_times * payment, 0) * lgd
     # Aggregate losses across all loans.
     total_losses = losses.sum(axis=0)
-    tock = time.time()
-    print(f"Time taken: {tock - tick:.2f} seconds")
+    toc = time.time()
+    print(f"Time taken: {toc - tic:.2f} seconds")
     
     return total_losses
 
