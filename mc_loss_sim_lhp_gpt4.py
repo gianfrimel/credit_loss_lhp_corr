@@ -156,7 +156,7 @@ def main():
     annual_pd = 0.006
     default_corr = 0.05
     n_periods = 60
-    n_scenarios = 10000
+    n_scenarios = 15000
     lgd = 0.47
     initial_balance = 10000  # Initial balance per loan.
 
